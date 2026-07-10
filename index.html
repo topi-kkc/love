@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love in Live My Way</title>
+    <title>Vivien - Love in Live My Way</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
     <style>
-        /* -------------------------------------------------- */
-        /* 1. نظام الألوان العام والأسلوب ثلاثي الأبعاد Claymorphic */
-        /* -------------------------------------------------- */
+        /* ===== 1. النظام اللوني والمتغيرات الأساسية ===== */
         :root {
             --bg-dark: #0b071e;
             --clay-bg: rgba(255, 255, 255, 0.08);
             --neon-pink: #ff007f;
             --neon-cyan: #00f3ff;
             --neon-gold: #ffcc00;
+            --neon-purple: #d946ef;
+            --neon-green: #00ff88;
             --text-main: #ffffff;
         }
 
@@ -26,7 +27,7 @@
         }
 
         body {
-            background-color: var(--bg-dark);
+            background: linear-gradient(135deg, #0b071e, #1a0f2e);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -35,7 +36,60 @@
             overflow-x: hidden;
         }
 
-        /* حاوية التطبيق الذكي بمقاس الموبايل */
+        /* ===== 2. شعار Vivien المتحرك بمربعات هندسية ===== */
+        .vivien-logo {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .logo-letter {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #000;
+            animation: rotateLetter 3s infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+        }
+
+        .logo-letter:nth-child(1) { animation-delay: 0s; }
+        .logo-letter:nth-child(2) { animation-delay: 0.2s; }
+        .logo-letter:nth-child(3) { animation-delay: 0.4s; }
+        .logo-letter:nth-child(4) { animation-delay: 0.6s; }
+        .logo-letter:nth-child(5) { animation-delay: 0.8s; }
+        .logo-letter:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes rotateLetter {
+            0%, 100% { transform: rotate(0deg) scale(1); background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink)); }
+            25% { transform: rotate(90deg) scale(1.1); background: linear-gradient(135deg, var(--neon-purple), var(--neon-gold)); }
+            50% { transform: rotate(180deg) scale(1); background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan)); }
+            75% { transform: rotate(270deg) scale(1.1); background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple)); }
+        }
+
+        .logo-letter-small {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: #000;
+            animation: rotateLetter 3s infinite;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+
+        /* ===== 3. واجهة الهاتف الذكي ===== */
         .phone-frame {
             width: 100%;
             max-width: 430px;
@@ -50,20 +104,7 @@
             overflow: hidden;
         }
 
-        /* تأثير الـ Claymorphic ثلاثي الأبعاد الناعم */
-        .clay-card {
-            background: var(--clay-bg);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 9px 9px 18px rgba(0, 0, 0, 0.45), 
-                        inset -4px -4px 10px rgba(255,255,255,0.05), 
-                        inset 4px 4px 10px rgba(0,0,0,0.3);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        /* الشاشات والمراحل */
+        /* ===== 4. النماذج والحقول ===== */
         .screen {
             display: none;
             flex-direction: column;
@@ -71,19 +112,30 @@
             height: 100%;
             padding: 25px 20px;
             overflow-y: auto;
+            flex: 1;
         }
 
         .screen.active { display: flex; }
 
-        /* -------------------------------------------------- */
-        /* 2. واجهة الدخول ونظام التوثيق الثنائي (2FA) */
-        /* -------------------------------------------------- */
-        .login-header {
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .auth-form {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .auth-header {
             text-align: center;
-            margin-top: 40px;
             margin-bottom: 30px;
         }
-        .login-header h1 {
+
+        .auth-header h1 {
             font-size: 1.8rem;
             background: linear-gradient(to left, var(--neon-cyan), var(--neon-pink));
             -webkit-background-clip: text;
@@ -91,10 +143,12 @@
             margin-bottom: 5px;
         }
 
+        /* ===== 5. أزرار وحقول الإدخال ===== */
         .input-group {
             margin-bottom: 18px;
             position: relative;
         }
+
         .input-group i {
             position: absolute;
             right: 15px;
@@ -102,7 +156,10 @@
             transform: translateY(-50%);
             color: rgba(255,255,255,0.4);
         }
-        .input-group input, .input-group select {
+
+        .input-group input, 
+        .input-group select,
+        .input-group textarea {
             width: 100%;
             padding: 14px 45px 14px 15px;
             background: rgba(0,0,0,0.3);
@@ -111,10 +168,18 @@
             color: #fff;
             outline: none;
             transition: 0.3s;
+            font-size: 1rem;
         }
-        .input-group input:focus { border-color: var(--neon-cyan); }
 
-        .btn-action {
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus { 
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+
+        /* ===== 6. الأزرار الرئيسية ===== */
+        .btn-login {
             width: 100%;
             padding: 14px;
             border: none;
@@ -126,463 +191,897 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
             transition: transform 0.2s;
-        }
-        .btn-action:active { transform: scale(0.97); }
-
-        /* -------------------------------------------------- */
-        /* 3. مجسمات ومؤثرات الطور ثلاثي الأبعاد Claymorphic */
-        /* -------------------------------------------------- */
-        .mascot-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .btn-login:hover { transform: translateY(-2px); }
+        .btn-login:active { transform: scale(0.97); }
+
+        .btn-signup {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #a78bfa, #f472b6);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(160, 120, 255, 0.4);
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .btn-signup:hover { transform: translateY(-2px); }
+        .btn-signup:active { transform: scale(0.97); }
+
+        .btn-neon {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+            transition: all 0.3s;
+        }
+
+        .btn-neon:hover { 
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff0050, #cc0040);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(0,243,255,0.3);
+        }
+
+        /* ===== 7. قسم تسجيل الدخول والعضوية ===== */
+        .toggle-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+        }
+
+        .toggle-text span {
+            color: var(--neon-cyan);
+            text-decoration: underline;
+        }
+
+        .hidden { display: none !important; }
+
+        /* ===== 8. OTP Inputs ===== */
+        .otp-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
             margin: 20px 0;
-            position: relative;
         }
 
-        /* محاكاة روبوت ثلاثي الأبعاد ناعم بالـ CSS بالكامل */
-        .clay-robot {
-            width: 100px;
-            height: 100px;
-            background: #e0e5ec;
-            border-radius: 35px;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.3), 
-                        inset -8px -8px 15px rgba(0,0,0,0.2), 
-                        inset 8px 8px 15px #fff;
-            position: relative;
-            animation: floatRobot 4s ease-in-out infinite;
-        }
-        .robot-eyes {
-            display: flex;
-            gap: 15px;
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .eye {
-            width: 16px;
-            height: 16px;
-            background: var(--neon-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--neon-cyan);
-        }
-        @keyframes floatRobot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+        .otp-input {
+            width: 45px !important;
+            height: 45px !important;
+            padding: 0 !important;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: rgba(0,243,255,0.1) !important;
+            border: 2px solid rgba(0,243,255,0.3) !important;
+            color: var(--neon-cyan);
         }
 
-        /* -------------------------------------------------- */
-        /* 4. كعكة عيد الميلاد التفاعلية (تطفئ في نهاية اليوم) */
-        /* -------------------------------------------------- */
-        .cake-container {
+        .otp-input:focus {
+            background: rgba(0,243,255,0.2) !important;
+            border-color: var(--neon-cyan) !important;
+        }
+
+        /* ===== 9. شريط الملاحة ===== */
+        .navbar {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            margin: 15px 0;
-        }
-        .cake {
-            width: 120px;
-            height: 60px;
-            background: #ff66b2;
-            border-radius: 15px 15px 0 0;
-            position: relative;
-            box-shadow: inset 0 8px 0 #fff, 0 10px 15px rgba(0,0,0,0.3);
-        }
-        .candle {
-            width: 8px;
-            height: 25px;
-            background: #66ccff;
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .flame {
-            width: 12px;
-            height: 12px;
-            background: #ffcc00;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            position: absolute;
-            top: -15px;
-            left: -2px;
-            box-shadow: 0 0 10px #ffcc00;
-            animation: flicker 0.5s infinite alternate;
-        }
-        .flame.extinguished { display: none; }
-        @keyframes flicker {
-            from { transform: scale(1); } to { transform: scale(1.2); }
+            padding: 15px 20px;
+            background: rgba(10, 5, 30, 0.8);
+            border-bottom: 1px solid rgba(0,243,255,0.1);
+            backdrop-filter: blur(10px);
         }
 
-        /* -------------------------------------------------- */
-        /* 5. ميزة الراديو ومسجل الصوت الذكي */
-        /* -------------------------------------------------- */
-        .radio-waves {
+        .nav-center {
             display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 5px;
-            margin: 15px 0;
-            height: 30px;
-            align-items: center;
+            flex: 1;
         }
-        .wave-bar {
-            width: 4px;
-            height: 10px;
-            background: var(--neon-cyan);
-            border-radius: 2px;
+
+        .nav-btn {
+            padding: 8px 12px;
+            border: none;
+            background: rgba(0,243,255,0.1);
+            color: rgba(255,255,255,0.6);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: #000;
+            box-shadow: 0 0 15px rgba(0,243,255,0.4);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
             transition: 0.3s;
         }
-        .wave-bar.active {
-            animation: pulseWave 0.6s infinite alternate;
-        }
-        @keyframes pulseWave {
-            from { height: 5px; } to { height: 30px; }
+
+        .btn-icon:hover { color: var(--neon-cyan); }
+
+        /* ===== 10. الإشعارات ===== */
+        .notifications-center {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 320px;
+            background: rgba(20, 10, 40, 0.95);
+            border: 1px solid rgba(0,243,255,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            max-height: 400px;
+            overflow-y: auto;
         }
 
-        .record-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: red;
-            border: 4px solid rgba(255,255,255,0.2);
-            color: white;
-            font-size: 1.5rem;
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification-item {
+            background: linear-gradient(135deg, rgba(0,243,255,0.1), rgba(255,0,127,0.1));
+            border-left: 3px solid var(--neon-cyan);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        /* ===== 11. النماذج والمدخلات ===== */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .image-upload, 
+        .audio-upload {
+            border: 2px dashed rgba(0,243,255,0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
             cursor: pointer;
+            transition: 0.3s;
+            background: rgba(0,243,255,0.05);
+        }
+
+        .image-upload:hover,
+        .audio-upload:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0,243,255,0.1);
+        }
+
+        /* ===== 12. شاشات المحتوى ===== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,243,255,0.1);
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .moments-grid,
+        .occasions-grid,
+        .voice-notes-grid,
+        .discovery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .moment-card,
+        .occasion-card {
+            background: linear-gradient(135deg, rgba(0,243,255,0.1), rgba(255,0,127,0.1));
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(0,243,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moment-card:hover,
+        .occasion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,243,255,0.3);
+            border-color: var(--neon-cyan);
+        }
+
+        .moment-card img,
+        .occasion-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: space-between;
+        }
+
+        .card-action-btn {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            background: rgba(0,243,255,0.2);
+            color: var(--neon-cyan);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card-action-btn:hover {
+            background: rgba(0,243,255,0.4);
+        }
+
+        /* ===== 13. نافذة مشروط (Modal) ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(20,10,40,0.95), rgba(30,15,50,0.95));
+            border: 1px solid rgba(0,243,255,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: rgba(255,255,255,0.6);
+            transition: 0.3s;
+        }
+
+        .close-modal:hover { color: var(--neon-cyan); }
+
+        /* ===== 14. تسجيل الصوت ===== */
+        .recording-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .wave-visualizer {
+            width: 100%;
+            height: 60px;
+            background: rgba(0,243,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .recording-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+        }
+
+        .recording-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* ===== 15. حالة الاتصال والمزامنة ===== */
+        .sync-status {
+            padding: 10px 20px;
+            background: rgba(0,243,255,0.05);
+            border-bottom: 1px solid rgba(0,243,255,0.1);
+            font-size: 0.85rem;
+            color: rgba(0,243,255,0.7);
+            text-align: center;
+        }
+
+        .online-status {
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(0,243,255,0.1), rgba(0,255,136,0.1));
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+
+        #onlineStatusText {
+            font-weight: bold;
+        }
+
+        /* ===== 16. الملف الشخصي ===== */
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .profile-picture {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .edit-picture {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 15px auto;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-        }
-        .record-btn.recording {
-            animation: pulseRecord 1s infinite alternate;
-            background: #b30000;
-        }
-        @keyframes pulseRecord {
-            from { box-shadow: 0 0 10px rgba(255,0,0,0.4); }
-            to { box-shadow: 0 0 25px rgba(255,0,0,0.8); }
+            cursor: pointer;
+            color: #000;
+            font-weight: bold;
         }
 
-        .notes-list {
-            margin-top: 15px;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-        .note-item {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            border-left: 3px solid var(--neon-pink);
+        .profile-info {
+            flex: 1;
         }
 
-        /* شريط التنقل السفلي الاحترافي للموقع */
-        .bottom-navbar {
-            height: 65px;
-            background: #0d0926;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: none;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
+        .profile-settings {
+            background: rgba(0,243,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(0,243,255,0.1);
         }
-        .nav-tab {
+
+        .setting-item {
+            margin-bottom: 12px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.5);
+        }
+
+        .setting-item label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
         }
-        .nav-tab.active { color: var(--neon-cyan); }
-        .nav-tab i { font-size: 1.2rem; margin-bottom: 2px; }
 
-        /* نافذة التنبيهات المنبثقة الصاعقة */
-        .toast-alert {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            width: 85%;
-            background: linear-gradient(135deg, #231942, #5e548e);
-            border: 2px solid var(--neon-gold);
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            z-index: 1000;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        .setting-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
-        .toast-alert.show { transform: translateX(-50%) translateY(0); }
+
+        .setting-item select {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,243,255,0.2);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-actions button {
+            flex: 1;
+        }
+
+        /* ===== 17. الثقافات والاكتشاف ===== */
+        .filter-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-group select {
+            background: rgba(0,243,255,0.1);
+            border: 1px solid rgba(0,243,255,0.3);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* ===== 18. تأثيرات عام ===== */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        /* Scroll bar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,243,255,0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,243,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .phone-frame {
+                border-radius: 20px;
+                max-width: 100%;
+                height: 100vh;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .moments-grid,
+            .occasions-grid,
+            .voice-notes-grid,
+            .discovery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
     </style>
 </head>
 <body>
-
     <div class="phone-frame">
-        
-        <div class="toast-alert" id="toastAlert">
-            <p id="toastText">⚡️ تنبيه: متبقي ربع ساعة على عيد الميلاد!</p>
-        </div>
-
-        <div class="screen active" id="loginScreen">
-            <div class="login-header">
-                <h1>Love in Live My Way</h1>
-                <p>الحياة بطريقتك ومشاعر الصادقة</p>
-            </div>
-
-            <div class="mascot-container">
-                <div class="clay-robot">
-                    <div class="robot-eyes"><div class="eye"></div><div class="eye"></div></div>
+        <!-- Auth Screen -->
+        <div id="authScreen" class="screen active">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <div class="vivien-logo">
+                        <div class="logo-letter" data-letter="V">V</div>
+                        <div class="logo-letter" data-letter="i">i</div>
+                        <div class="logo-letter" data-letter="v">v</div>
+                        <div class="logo-letter" data-letter="i">i</div>
+                        <div class="logo-letter" data-letter="e">e</div>
+                        <div class="logo-letter" data-letter="n">n</div>
+                    </div>
+                    <p>توثيق اللحظات والمشاعر بطريقتك الخاصة</p>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="text" id="usernameInput" placeholder="البريد الإلكتروني أو رقم الهاتف">
-            </div>
-
-            <div class="input-group">
-                <i class="fa-solid fa-lock"></i>
-                <input type="password" id="passwordInput" placeholder="كلمة المرور السرية">
-            </div>
-
-            <div class="input-group">
-                <i class="fa-solid fa-shield-halved"></i>
-                <select id="authMethod">
-                    <option value="whatsapp">إرسال كود التوثيق عبر الواتساب (WhatsApp)</option>
-                    <option value="sms">إرسال كود التوثيق عبر الهاتف (SMS)</option>
-                    <option value="email">إرسال كود التوثيق عبر البريد الإلكتروني</option>
-                </select>
-            </div>
-
-            <button class="btn-action" onclick="requestVerificationCode()">إرسال كود التوثيق ⚡></button>
-
-            <div id="verificationSection" style="display: none; margin-top: 15px;">
-                <div class="input-group">
-                    <i class="fa-solid fa-key"></i>
-                    <input type="text" id="vCode" placeholder="أدخل رمز التوثيق المرسل">
+                <!-- Login Form -->
+                <div id="loginForm" class="auth-form">
+                    <h2 style="text-align: center; margin-bottom: 20px; color: var(--neon-pink);">تسجيل الدخول 💝</h2>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="emailInput" placeholder="البريد الإلكتروني">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="passwordInput" placeholder="كلمة المرور">
+                    </div>
+                    <button class="btn-login" onclick="handleLogin()">💝 دخول</button>
+                    <p class="toggle-text" onclick="toggleSignup()">ليس لديك حساب؟ <span>إنشاء حساب</span></p>
                 </div>
-                <button class="btn-action" style="background: linear-gradient(135deg, var(--neon-cyan), #0088cc);" onclick="verifyAndLogin()">تأكيد الدخول الفوري</button>
-            </div>
-        </div>
 
-        <div class="screen" id="notesScreen">
-            <h2 style="font-size:1.2rem; margin-bottom:15px; color:var(--neon-cyan);">🎙️ المفكرة الصوتية الذكية</h2>
-            <div class="clay-card">
-                <p style="font-size: 0.85rem; opacity: 0.7;">اضغط على الزر وسجل أي شيء مهم بصوتك، وسيتحول تلقائياً إلى نص مكتوب مع التاريخ الحقيقي:</p>
-                
-                <button class="record-btn" id="recordBtn" onclick="toggleVoiceRecording()"><i class="fa-solid fa-microphone"></i></button>
-                <p id="recordingStatus" style="text-align: center; font-size: 0.8rem; color: var(--neon-pink);"></p>
-
-                <textarea id="noteTextOutput" style="width:100%; height:80px; background:rgba(0,0,0,0.4); border:none; border-radius:10px; color:#fff; padding:10px; font-size:0.9rem; resize:none; outline:none; margin-top:10px;" placeholder="سيظهر النص المسجل هنا..."></textarea>
-                <button class="btn-action" style="margin-top:10px; padding:10px;" onclick="saveCurrentNote()">حفظ المذكرة الآن</button>
-            </div>
-
-            <h3 style="font-size:1rem; margin-top:15px; margin-bottom:5px;">📋 السجلات المحفوظة</h3>
-            <div class="notes-list" id="notesList">
+                <!-- Signup Form -->
+                <div id="signupForm" class="auth-form hidden">
+                    <h2 style="text-align: center; margin-bottom: 20px; color: var(--neon-purple);">إنشاء حساب 👼</h2>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="fullNameInput" placeholder="الاسم الكامل">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signupEmailInput" placeholder="البريد الإلكتروني">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signupPasswordInput" placeholder="كلمة المرور">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPasswordInput" placeholder="تأكيد كلمة المرور">
+                    </div>
+                    <button class="btn-signup" onclick="handleSignup()">👼 إنشاء حساب</button>
+                    <p class="toggle-text" onclick="toggleSignup()">لديك حساب؟ <span>تسجيل دخول</span></p>
                 </div>
-        </div>
 
-        <div class="screen" id="eventsScreen">
-            <h2 style="font-size:1.2rem; margin-bottom:15px; color:var(--neon-pink);">🎉 أعياد الميلاد والمناسبات المخصصة</h2>
-            
-            <div class="cake-container">
-                <div class="cake">
-                    <div class="candle"><div class="flame" id="cakeFlame"></div></div>
+                <!-- 2FA Form -->
+                <div id="twoFactorForm" class="auth-form hidden">
+                    <h3 style="text-align: center; margin-bottom: 15px;">التحقق الثنائي 💝</h3>
+                    <p style="text-align: center; margin-bottom: 20px; font-size: 0.9rem;">أدخل الرمز المكون من 6 أرقام</p>
+                    <div class="otp-inputs">
+                        <input type="text" maxlength="1" class="otp-input">
+                        <input type="text" maxlength="1" class="otp-input">
+                        <input type="text" maxlength="1" class="otp-input">
+                        <input type="text" maxlength="1" class="otp-input">
+                        <input type="text" maxlength="1" class="otp-input">
+                        <input type="text" maxlength="1" class="otp-input">
+                    </div>
+                    <button class="btn-login" onclick="verify2FA()">✓ تحقق</button>
+                    <p class="toggle-text" onclick="showLoginForm()" style="margin-top: 20px;">العودة للدخول</p>
                 </div>
-                <p id="cakeStatusText" style="font-size:0.8rem; margin-top:10px; color:var(--neon-gold);">🔥 شمعة عيد ميلاد اليوم متوهجة وتحتفل معك!</p>
-            </div>
-
-            <div class="clay-card" style="margin-top: 10px;">
-                <h4 style="font-size:0.9rem; margin-bottom:8px;">صنع رسالة مناسبة مخصصة:</h4>
-                <div class="input-group">
-                    <input type="text" id="eventTitle" placeholder="عنوان المناسبة (مثال: عيد زواجنا)">
-                </div>
-                <div class="input-group">
-                    <input type="date" id="eventDate">
-                </div>
-                <button class="btn-action" onclick="addNewEvent()">حفظ وجدولة التنبيهات الدقيقة</button>
-            </div>
-
-            <div style="margin-top:15px;">
-                <h4 style="font-size:0.9rem; margin-bottom:5px;">الأعياد الحكومية والدينية المبرمجة أوفلاين:</h4>
-                <p style="font-size:0.8rem; opacity:0.7; background:rgba(255,255,255,0.05); padding:6px; border-radius:5px; margin-bottom:4px;">🕌 عيد الفطر المبارك وعيد الأضحى (تنبيه مسبق)</p>
-                <p style="font-size:0.8rem; opacity:0.7; background:rgba(255,255,255,0.05); padding:6px; border-radius:5px; margin-bottom:4px;">🇪🇬 أعياد الثورة والتحرير الرسمية (مضافة تلقائياً)</p>
             </div>
         </div>
 
-        <div class="screen" id="radioScreen">
-            <h2 style="font-size:1.2rem; margin-bottom:15px; color:var(--neon-gold);">📻 الاتصال عبر إشارات الراديو اللاسلكية</h2>
-            
-            <div class="clay-card" style="text-align: center;">
-                <p style="font-size: 0.85rem; opacity:0.8; margin-bottom:15px;">يتيح لك هذا القسم مشاركة وتوصيل الصوت عبر موجات الإشارة والبرامج الترددية للراديو الموجودة في أجهزة المحمول.</p>
-                
-                <div class="radio-waves">
-                    <div class="wave-bar active" style="animation-delay: 0.1s;"></div>
-                    <div class="wave-bar active" style="animation-delay: 0.3s;"></div>
-                    <div class="wave-bar active" style="animation-delay: 0.5s;"></div>
-                    <div class="wave-bar active" style="animation-delay: 0.2s;"></div>
-                    <div class="wave-bar active" style="animation-delay: 0.4s;"></div>
+        <!-- Main Dashboard -->
+        <div id="mainDashboard" class="screen hidden">
+            <!-- Navigation Bar -->
+            <nav class="navbar">
+                <div style="display: flex; gap: 5px;">
+                    <div class="logo-letter-small" style="animation-delay: 0s;">V</div>
+                    <div class="logo-letter-small" style="animation-delay: 0.2s;">i</div>
+                    <div class="logo-letter-small" style="animation-delay: 0.4s;">v</div>
+                </div>
+                <div class="nav-center">
+                    <button class="nav-btn active" onclick="showSection('moments')">📸</button>
+                    <button class="nav-btn" onclick="showSection('occasions')">🎊</button>
+                    <button class="nav-btn" onclick="showSection('voice')">🎙️</button>
+                    <button class="nav-btn" onclick="showSection('discover')">🌍</button>
+                    <button class="nav-btn" onclick="showSection('profile')">👤</button>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-icon" onclick="toggleSync()" title="مزامنة">☁️</button>
+                    <button class="btn-icon" onclick="toggleNotifications()" title="إشعارات">🔔</button>
+                    <button class="btn-icon" onclick="logout()" title="خروج">🚪</button>
+                </div>
+            </nav>
+
+            <!-- Sync Status -->
+            <div class="sync-status" id="syncStatus">آخر مزامنة: الآن</div>
+
+            <!-- Notifications -->
+            <div id="notificationsCenter" class="notifications-center hidden">
+                <h3 style="margin-bottom: 15px;">الإشعارات 🔔</h3>
+                <div id="notificationsList" class="notifications-list"></div>
+            </div>
+
+            <!-- Moments Section -->
+            <section id="momentsSection" class="section-content">
+                <div class="section-header">
+                    <h2>📸 اللحظات الخاصة</h2>
+                    <button class="btn-neon" onclick="openMomentForm()" style="font-size: 0.9rem;">➕ جديد</button>
+                </div>
+                <div id="momentsGrid" class="moments-grid"></div>
+            </section>
+
+            <!-- Occasions Section -->
+            <section id="occasionsSection" class="section-content hidden">
+                <div class="section-header">
+                    <h2>🎊 المناسبات</h2>
+                    <button class="btn-neon" onclick="openOccasionForm()" style="font-size: 0.9rem;">➕ جديد</button>
+                </div>
+                <div id="occasionsGrid" class="occasions-grid"></div>
+            </section>
+
+            <!-- Voice Notes Section -->
+            <section id="voiceSection" class="section-content hidden">
+                <div class="section-header">
+                    <h2>🎙️ المذكرات الصوتية</h2>
+                    <button class="btn-neon" onclick="openVoiceRecorder()" style="font-size: 0.9rem;">🎤 جديد</button>
+                </div>
+                <div id="voiceNotesGrid" class="voice-notes-grid"></div>
+            </section>
+
+            <!-- Discover Section -->
+            <section id="discoverSection" class="section-content hidden">
+                <div class="section-header">
+                    <h2>🌍 اكتشف ثقافات</h2>
+                </div>
+                <div class="filter-group" style="margin-bottom: 20px;">
+                    <select id="cultureFilter" onchange="filterCultures()" style="flex: 1;">
+                        <option value="">كل المناسبات</option>
+                        <option value="arab">🇸🇦 عربية</option>
+                        <option value="western">🌍 غربية</option>
+                        <option value="asian">🎎 آسيوية</option>
+                        <option value="african">🌍 أفريقية</option>
+                        <option value="indian">🇮🇳 هندية</option>
+                        <option value="latin">🎉 لاتينية</option>
+                    </select>
+                </div>
+                <div class="online-status">
+                    <span id="onlineStatusText">🟢 متصل بالإنترنت</span>
+                </div>
+                <div id="discoveryGrid" class="discovery-grid"></div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profileSection" class="section-content hidden">
+                <h2 style="margin-bottom: 20px;">👤 الملف الشخصي</h2>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-picture">
+                            <img id="profilePicture" src="https://via.placeholder.com/100/1a103c/00f3ff?text=You" alt="صورة الملف">
+                            <label class="edit-picture" onclick="document.getElementById('profileImageInput').click()">
+                                📷
+                                <input type="file" id="profileImageInput" accept="image/*" style="display:none;">
+                            </label>
+                        </div>
+                        <div class="profile-info">
+                            <div class="form-group">
+                                <label>الاسم</label>
+                                <input type="text" id="profileName" placeholder="اسمك">
+                            </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني</label>
+                                <input type="email" id="profileEmail" placeholder="��ريدك" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-settings">
+                        <h3 style="margin-bottom: 15px;">⚙️ الإعدادات</h3>
+                        <div class="setting-item">
+                            <label><input type="checkbox" id="notificationsEnabled" checked> الإشعارات</label>
+                        </div>
+                        <div class="setting-item">
+                            <label><input type="checkbox" id="soundEnabled" checked> الأصوات</label>
+                        </div>
+                        <div class="setting-item">
+                            <label>صوت الإشعار</label>
+                            <select id="notificationSound">
+                                <option value="default">🔔 افتراضي</option>
+                                <option value="gentle">🎵 لطيف</option>
+                                <option value="bright">✨ مرح</option>
+                                <option value="romantic">💕 رومانسي</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label><input type="checkbox" id="twoFactorEnabled"> المصادقة الثنائية</label>
+                        </div>
+                        <div class="setting-item">
+                            <label><input type="checkbox" id="offlineMode" checked> المزامنة التلقائية</label>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn-neon" onclick="saveProfile()" style="flex: 1;">💾 حفظ التغييرات</button>
+                        <button class="btn-danger" onclick="logout()" style="flex: 1;">🚪 خروج</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modals -->
+        <!-- Moment Form Modal -->
+        <div id="momentFormModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeMomentForm()">&times;</span>
+                <h3 style="margin-bottom: 20px;">📸 لحظة جديدة</h3>
+
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="momentDescription" placeholder="صف اللحظة..." style="height: 80px; resize: none;"></textarea>
                 </div>
 
-                <p style="font-weight: bold; color: var(--neon-cyan); font-size: 1.1rem; margin: 10px 0;">التردد الحالي: <span id="frequencyVal">98.5</span> MHZ</p>
-                <button class="btn-action" style="background:linear-gradient(135deg, #00f3ff, #0066aa);" onclick="tuneRadioFrequency()">تغيير التردد والبحث عن إشارة</button>
+                <div class="form-group">
+                    <label>الصورة</label>
+                    <div class="image-upload" onclick="document.getElementById('momentImage').click()">
+                        <p>📸 اضغط لاختيار صورة</p>
+                        <input type="file" id="momentImage" accept="image/*" style="display:none;">
+                    </div>
+                    <img id="momentImagePreview" style="display:none; max-width:100%; border-radius:10px; margin-top: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label>ملف صوتي (اختياري)</label>
+                    <div class="audio-upload" onclick="document.getElementById('momentAudio').click()">
+                        <p>🎵 اضغط لاختيار ملف</p>
+                        <input type="file" id="momentAudio" accept="audio/*" style="display:none;">
+                    </div>
+                    <div id="momentAudioPreview" style="display:none; margin-top: 10px;">
+                        <audio controls style="width:100%;"></audio>
+                    </div>
+                </div>
+
+                <button class="btn-neon" onclick="saveMoment()" style="width: 100%; padding: 12px;">💾 حفظ اللحظة</button>
             </div>
         </div>
 
-        <div class="bottom-navbar" id="bottomNav">
-            <div class="nav-tab active" onclick="switchTab('notesScreen', this)"><i class="fa-solid fa-microphone-lines"></i>المفكرة</div>
-            <div class="nav-tab" onclick="switchTab('eventsScreen', this)"><i class="fa-solid fa-cake-candles"></i>المناسبات</div>
-            <div class="nav-tab" onclick="switchTab('radioScreen', this)"><i class="fa-solid fa-radio"></i>إشارة الراديو</div>
+        <!-- Occasion Form Modal -->
+        <div id="occasionFormModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeOccasionForm()">&times;</span>
+                <h3 style="margin-bottom: 20px;" id="occasionFormTitle">🎊 مناسبة جديدة</h3>
+                <input type="hidden" id="editingOccasionId">
+
+                <div class="form-group">
+                    <label>اسم المناسبة</label>
+                    <input type="text" id="occasionName" placeholder="مثال: عيد ميلاد، ذكرى زواج...">
+                </div>
+
+                <div class="form-group">
+                    <label>التاريخ والوقت</label>
+                    <input type="datetime-local" id="occasionDateTime">
+                </div>
+
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="occasionDescription" placeholder="اكتب وصفاً..." style="height: 70px; resize: none;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>الثقافة/الحضارة</label>
+                    <select id="occasionCulture">
+                        <option value="">اختر الثقافة</option>
+                        <option value="arab">🇸🇦 عربية</option>
+                        <option value="western">🌍 غربية</option>
+                        <option value="asian">🎎 آسيوية</option>
+                        <option value="african">🌍 أفريقية</option>
+                        <option value="indian">🇮🇳 هندية</option>
+                        <option value="latin">🎉 لاتينية</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>صورة المناسبة</label>
+                    <div class="image-upload" onclick="document.getElementById('occasionImage').click()">
+                        <p>📸 اضغط لاختيار صورة</p>
+                        <input type="file" id="occasionImage" accept="image/*" style="display:none;">
+                    </div>
+                    <img id="occasionImagePreview" style="display:none; max-width:100%; border-radius:10px; margin-top: 10px;">
+                </div>
+
+                <div class="form-group">
+                    <label>الملف الصوتي (صوت الشعار)</label>
+                    <div class="audio-upload" onclick="document.getElementById('occasionAudio').click()">
+                        <p>🎵 اضغط لاختيار ملف</p>
+                        <input type="file" id="occasionAudio" accept="audio/*" style="display:none;">
+                    </div>
+                    <div id="occasionAudioPreview" style="display:none; margin-top: 10px;">
+                        <audio controls style="width:100%;"></audio>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><input type="checkbox" id="occasionFlash"> تفعيل فلاش الهاتف عند التنبيه</label>
+                </div>
+
+                <div class="form-group">
+                    <label><input type="checkbox" id="occasionFullScreen"> ملء الشاشة بصورة عند التنبيه</label>
+                </div>
+
+                <div class="form-group">
+                    <label><input type="checkbox" id="occasionPublish"> نشر المناسبة (مشاركة عامة)</label>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-neon" onclick="saveOccasion()">💾 حفظ</button>
+                    <button class="btn-danger hidden" id="deleteOccasionBtn" onclick="deleteOccasion()">🗑️ حذف</button>
+                </div>
+            </div>
         </div>
 
+        <!-- Voice Recording Modal -->
+        <div id="voiceRecordingModal" class="modal">
+            <div class="modal-content recording-modal">
+                <span class="close-modal" onclick="closeVoiceRecorder()">&times;</span>
+                <h3 style="margin-bottom: 20px;">🎙️ تسجيل صوتي</h3>
+
+                <div class="recording-container">
+                    <canvas id="waveCanvas" class="wave-visualizer"></canvas>
+                    <div class="recording-time" id="recordingTime">00:00</div>
+                    <div class="recording-buttons">
+                        <button id="recordBtn" class="btn-neon" onclick="toggleRecording()">🎤 ابدأ</button>
+                    </div>
+                </div>
+
+                <div id="recordingPlayback" style="display:none;">
+                    <audio id="audioPlayback" controls style="width:100%; margin:20px 0;"></audio>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-neon" onclick="saveVoiceNote()" style="flex: 1;">💾 حفظ</button>
+                        <button class="btn-secondary" onclick="retryRecording()" style="flex: 1;">🔄 إعادة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // إعدادات محول الصوت والتحويل إلى نصوص (Web Speech API)
-        const recordBtn = document.getElementById('recordBtn');
-        const noteTextOutput = document.getElementById('noteTextOutput');
-        const recordingStatus = document.getElementById('recordingStatus');
-        let recognition;
-        let isRecording = false;
-
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = false;
-            recognition.lang = 'ar-EG'; // تعيين اللغة العربية بدقة عالية
-
-            recognition.onresult = function(event) {
-                const resultText = event.results[event.results.length - 1][0].transcript;
-                noteTextOutput.value += resultText + " ";
-            };
-
-            recognition.onerror = function() {
-                stopRecording();
-            };
-        }
-
-        function toggleVoiceRecording() {
-            if (!recognition) {
-                alert("متصفحك الحالي لا يدعم ميزة تحويل الصوت إلى نصوص، يرجى كتابة النص يدوياً.");
-                return;
-            }
-            if (!isRecording) {
-                startRecording();
-            } else {
-                stopRecording();
-            }
-        }
-
-        function startRecording() {
-            isRecording = true;
-            recordBtn.classList.add('recording');
-            recordingStatus.innerText = "جاري الاستماع لصوتك وتسجيله فورياً...";
-            recognition.start();
-        }
-
-        function stopRecording() {
-            isRecording = false;
-            recordBtn.classList.remove('recording');
-            recordingStatus.innerText = "";
-            recognition.stop();
-        }
-
-        // حفظ وعرض المذكرات المسجلة بالتاريخ والوقت
-        function saveCurrentNote() {
-            const text = noteTextOutput.value.trim();
-            if(!text) return;
-            const now = new Date();
-            const dateStr = `${now.toLocaleDateString('ar-EG')} - ${now.toLocaleTimeString('ar-EG')}`;
-            
-            const notesList = document.getElementById('notesList');
-            const noteItem = document.createElement('div');
-            noteItem.className = 'note-item';
-            noteItem.innerHTML = `<strong>${dateStr}</strong><p>${text}</p>`;
-            notesList.prepend(noteItem);
-            
-            noteTextOutput.value = "";
-            showToast("⚡ تم حفظ المذكرة المكتوبة والصوتية بنجاح!");
-        }
-
-        // نظام محاكاة التوثيق الثنائي والتنقل
-        function requestVerificationCode() {
-            const user = document.getElementById('usernameInput').value;
-            const method = document.getElementById('authMethod').value;
-            if(!user) { alert("من فضلك أدخل البريد أو رقم الهاتف أولاً"); return; }
-            
-            document.getElementById('verificationSection').style.display = 'block';
-            alert(`🔒 تم إرسال كود التوثيق المكون من 4 أرقام عبر نظام [${method.toUpperCase()}] بنجاح.`);
-        }
-
-        function verifyAndLogin() {
-            const code = document.getElementById('vCode').value;
-            if(code.length >= 4) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('notesScreen').style.display = 'flex';
-                document.getElementById('bottomNav').style.display = 'flex';
-                showToast("🔓 تم التوثيق بنجاح! مرحباً بك في عالمك الخاص.");
-                simulateBirthdayTriggers();
-            } else {
-                alert("كود التوثيق غير صحيح، يرجى المحاولة مرة أخرى.");
-            }
-        }
-
-        // التنقل بين شاشات التطبيق بعد تسجيل الدخول
-        function switchTab(screenId, tabElement) {
-            document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-            document.getElementById(screenId).style.display = 'flex';
-            
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            tabElement.classList.add('active');
-        }
-
-        // محاكاة إشعار التنبيه الصاعق قبل عيد الميلاد (ربع ساعة ودقيقة واحدة)
-        function simulateBirthdayTriggers() {
-            // تنبيه الـ 15 دقيقة المسبق
-            setTimeout(() => {
-                showToast("⚡️ متبقي 15 دقيقة على مناسبة عيد الميلاد السعيد! جهّز التورتة والرسائل.");
-            }, 6000); // محاكاة سريعة بعد 6 ثوانٍ
-
-            // تنبيه الدقيقة الواحدة المسبق
-            setTimeout(() => {
-                showToast("⏰ متبقي دقيقة واحدة فقط! بدء العد التنازلي لإطفاء الشموع.");
-            }, 15000); // محاكاة سريعة بعد 15 ثانية
-
-            // إطفاء الشموع في نهاية اليوم (محاكاة برمجية)
-            setTimeout(() => {
-                document.getElementById('cakeFlame').classList.add('extinguished');
-                document.getElementById('cakeStatusText').innerText = "💤 انتهى اليوم السعيد وتم إطفاء الشموع تلقائياً.";
-                document.getElementById('cakeStatusText').style.color = "#777";
-            }, 30000);
-        }
-
-        // إضافة مناسبة جديدة وجدولة إشعاراتها
-        function addNewEvent() {
-            const title = document.getElementById('eventTitle').value;
-            const date = document.getElementById('eventDate').value;
-            if(!title || !date) { alert("يرجى ملء بيانات المناسبة بالكامل"); return; }
-            
-            showToast(`🎉 تم حفظ مناسبة "${title}" وجدولة التنبيهات بدقة مسبقة!`);
-        }
-
-        // دالة تغيير ترددات الراديو ومزامنة الإشارة
-        function tuneRadioFrequency() {
-            const freqs = [90.4, 95.0, 98.5, 100.6, 105.3];
-            const nextFreq = freqs[Math.floor(Math.random() * freqs.length)];
-            document.getElementById('frequencyVal').innerText = nextFreq;
-            showToast(`📻 تم ضبط إشارة المحمول اللاسلكية بنجاح على التردد البثي ${nextFreq} MHZ`);
-        }
-
-        // دالة إظهار نافذة التنبيه المنبثقة الشاملة
-        function showToast(message) {
-            const toast = document.getElementById('toastAlert');
-            document.getElementById('toastText').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 4500);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
