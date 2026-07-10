@@ -1,0 +1,56 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK to Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: love-app
+        path: app/build/outputs/apk/release/
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0-${{ github.run_number }}
+        release_name: VIVIEN App v1.0.0 - Build ${{ github.run_number }}
+        body: |
+          🎉 تطبيق VIVIEN 3D Cube Animation
+          
+          تم بناء الحزمة بنجاح ✅
+          
+          📥 حمل ملف APK من الأسفل
+          📱 قم بتثبيته على هاتفك الذكي
+          
+          المميزات:
+          - مكعب 3D متحرك
+          - يعرض أحرف VIVIEN
+          - ألوان نيون جميلة
+          - أداء خفيف جداً
+        draft: false
+        prerelease: false
