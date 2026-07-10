@@ -1,0 +1,6 @@
+-keepattributes *Annotation*
+-keep class kotlin.** { *; }
+-keep class androidx.** { *; }
+-keep class com.vivien.love.** { *; }
+-dontwarn kotlin.**
+-dontwarn androidx.**
