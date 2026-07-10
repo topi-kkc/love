@@ -1,18 +1,18 @@
-name: Build APK
+name: Build and Package APK
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
@@ -24,33 +24,103 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Release APK
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleRelease --stacktrace
 
-    - name: Upload APK to Artifacts
-      uses: actions/upload-artifact@v3
+    - name: Create Installation Package
+      run: |
+        mkdir -p love-apk-package
+        cp app/build/outputs/apk/release/app-release.apk love-apk-package/VIVIEN.apk
+        
+        cat > love-apk-package/README_AR.txt << 'EOF'
+        =================================================================
+                   تطبيق VIVIEN - 3D Cube Animation
+        =================================================================
+        
+        📱 خطوات التثبيت:
+        
+        1. انسخ ملف VIVIEN.apk إلى هاتفك
+        2. افتح إعدادات الهاتف
+        3. اذهب إلى الأمان والخصوصية
+        4. فعّل "التطبيقات من مصادر غير معروفة"
+        5. افتح ملف VIVIEN.apk
+        6. اضغط على "تثبيت"
+        7. استمتع بالتطبيق! 🎮
+        
+        =================================================================
+        
+        ✨ المميزات:
+        - مكعب هندسي ثلاثي الأبعاد متحرك
+        - يعرض أحرف كلمة VIVIEN
+        - ألوان نيون جميلة (Cyan و Hot Pink)
+        - أداء خفيف جداً
+        
+        📊 المتطلبات:
+        - Android 7.0 أو أحدث
+        - 15 MB مساحة تخزين
+        
+        =================================================================
+        EOF
+
+        cat > love-apk-package/README_EN.txt << 'EOF'
+        =================================================================
+                    VIVIEN App - 3D Cube Animation
+        =================================================================
+        
+        📱 Installation Steps:
+        
+        1. Copy VIVIEN.apk file to your phone
+        2. Open your phone's Settings
+        3. Go to Security & Privacy
+        4. Enable "Unknown Sources"
+        5. Open VIVIEN.apk file
+        6. Click "Install"
+        7. Enjoy the app! 🎮
+        
+        =================================================================
+        
+        ✨ Features:
+        - Animated 3D geometric cube
+        - Displays letters of VIVIEN
+        - Beautiful neon colors
+        - Lightweight performance
+        
+        📊 Requirements:
+        - Android 7.0 or later
+        - 15 MB storage space
+        
+        =================================================================
+        EOF
+
+    - name: Create ZIP Package
+      run: |
+        cd love-apk-package
+        zip -r ../VIVIEN-APK-Package.zip .
+        cd ..
+        ls -lh VIVIEN-APK-Package.zip
+
+    - name: Upload Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: love-app
-        path: app/build/outputs/apk/release/
-
-    - name: Create Release
-      uses: actions/create-release@v1
+        files: VIVIEN-APK-Package.zip
+        tag_name: v1.0.0
+        release_name: "VIVIEN App v1.0.0"
+        body: |
+          # 🎉 VIVIEN 3D Cube Animation
+          
+          **Download VIVIEN-APK-Package.zip** - Ready to install!
+          
+          📦 Inside: VIVIEN.apk + Installation guides
+          
+          🚀 Quick Install:
+          1. Extract ZIP
+          2. Transfer VIVIEN.apk to phone
+          3. Enable Unknown Sources
+          4. Install & Enjoy!
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
       with:
-        tag_name: v1.0.0-${{ github.run_number }}
-        release_name: VIVIEN App v1.0.0 - Build ${{ github.run_number }}
-        body: |
-          🎉 تطبيق VIVIEN 3D Cube Animation
-          
-          تم بناء الحزمة بنجاح ✅
-          
-          📥 حمل ملف APK من الأسفل
-          📱 قم بتثبيته على هاتفك الذكي
-          
-          المميزات:
-          - مكعب 3D متحرك
-          - يعرض أحرف VIVIEN
-          - ألوان نيون جميلة
-          - أداء خفيف جداً
-        draft: false
-        prerelease: false
+        name: VIVIEN-APK-Package
+        path: VIVIEN-APK-Package.zip
