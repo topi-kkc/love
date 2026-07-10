@@ -1,0 +1,133 @@
+╔════════════════════════════════════════════════════════════════╗
+║                     VIVIEN APP SETUP GUIDE                     ║
+║                  تطبيق VIVIEN - دليل الإعداد                   ║
+╚════════════════════════════════════════════════════════════════╝
+
+📱 ENGLISH INSTALLATION
+════════════════════════════════════════════════════════════════
+
+1. DOWNLOAD APK
+   → Download VIVIEN.apk from GitHub Releases
+   → File size: ~15 MB
+   → Version: 1.0.0
+
+2. ENABLE UNKNOWN SOURCES
+   → Go to Settings
+   → Security & Privacy
+   → Enable "Unknown Sources" or "Install Unknown Apps"
+
+3. INSTALL APK
+   → Open File Manager
+   → Find VIVIEN.apk
+   → Tap the file
+   → Click "Install"
+   → Wait for completion
+
+4. LAUNCH APP
+   → Find VIVIEN in your apps
+   → Tap to open
+   → Enjoy the 3D cube animation!
+
+════════════════════════════════════════════════════════════════
+
+🇸🇦 تعليمات التثبيت العربية
+════════════════════════════════════════════════════════════════
+
+1. تحميل ملف APK
+   ← حمل VIVIEN.apk من GitHub
+   ← حجم الملف: 15 MB تقريباً
+   ← الإصدار: 1.0.0
+
+2. تفعيل المصادر المجهولة
+   ← اذهب إلى الإعدادات
+   ← الأمان والخصوصية
+   ← فعّل "التطبيقات من مصادر غير معروفة"
+
+3. تثبيت ملف APK
+   ← افتح مدير الملفات
+   ← ابحث عن VIVIEN.apk
+   ← اضغط على الملف
+   ← اضغط "تثبيت"
+   ← انتظر اكتمال التثبيت
+
+4. تشغيل التطبيق
+   ← ابحث عن VIVIEN في التطبيقات
+   ← اضغط لفتح
+   ← استمتع برسوميات المكعب ثلاثي الأبعاد!
+
+════════════════════════════════════════════════════════════════
+
+✨ APP FEATURES / المميزات
+════════════════════════════════════════════════════════════════
+
+✓ 3D Animated Cube
+✓ VIVIEN Letter Display
+✓ Beautiful Neon Colors (Cyan & Hot Pink)
+✓ Lightweight Performance
+✓ No Internet Required
+✓ No Ads or Tracking
+✓ Open Source Code
+
+════════════════════════════════════════════════════════════════
+
+📊 SYSTEM REQUIREMENTS / المتطلبات
+════════════════════════════════════════════════════════════════
+
+Android Version: 7.0 or higher (API 24+)
+Storage: 15 MB free space
+RAM: 512 MB minimum (1 GB recommended)
+GPU: Any basic graphics processor
+Internet: Optional (one-time setup only)
+
+════════════════════════════════════════════════════════════════
+
+🆘 TROUBLESHOOTING / حل المشاكل
+════════════════════════════════════════════════════════════════
+
+PROBLEM: "Cannot install unknown apps"
+SOLUTION: Enable it in Settings > Security > Unknown Sources
+
+PROBLEM: "Installation failed"
+SOLUTION: Download file again, check storage space
+
+PROBLEM: "App crashes on startup"
+SOLUTION: Restart phone, uninstall and reinstall
+
+PROBLEM: "File not found"
+SOLUTION: Download from official GitHub repository
+
+PROBLEM: "Permission denied"
+SOLUTION: Check file permissions, download from trusted source
+
+════════════════════════════════════════════════════════════════
+
+📥 DOWNLOAD LINKS / روابط التحميل
+════════════════════════════════════════════════════════════════
+
+GitHub Repository:
+https://github.com/topi-kkc/love
+
+Releases Page:
+https://github.com/topi-kkc/love/releases
+
+Direct APK Download:
+https://github.com/topi-kkc/love/releases/download/v1.0.0/VIVIEN.apk
+
+════════════════════════════════════════════════════════════════
+
+📧 SUPPORT / الدعم
+════════════════════════════════════════════════════════════════
+
+Report Issues:
+https://github.com/topi-kkc/love/issues
+
+Discussions:
+https://github.com/topi-kkc/love/discussions
+
+Developer:
+https://github.com/topi-kkc
+
+════════════════════════════════════════════════════════════════
+
+🎮 ENJOY VIVIEN! استمتع بـ VIVIEN!
+════════════════════════════════════════════════════════════════
